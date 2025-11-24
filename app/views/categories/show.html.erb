@@ -1,0 +1,24 @@
+<%= render 'shared/breadcrumbs' do %>
+  <li class="breadcrumb-item active"><%= @category.name %></li>
+<% end %>
+
+<h1 class="my-4"><%= @category.name %></h1>
+<% if @category.description.present? %>
+  <p class="lead"><%= @category.description %></p>
+<% end %>
+
+<div class="row">
+  <% if @products.any? %>
+    <% @products.each do |product| %>
+      <%= render 'shared/product_card', product: product %>
+    <% end %>
+  <% else %>
+    <div class="col-12">
+      <div class="alert alert-info">No products in this category yet.</div>
+    </div>
+  <% end %>
+</div>
+
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @products %>
+</div>

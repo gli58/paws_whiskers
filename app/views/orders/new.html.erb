@@ -1,0 +1,93 @@
+<h1 class="my-4">Checkout</h1>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Order Summary</h5>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cart_items.each do |item| %>
+              <tr>
+                <td><%= item[:product].name %></td>
+                <td><%= number_to_currency(item[:product].current_price) %></td>
+                <td><%= item[:quantity] %></td>
+                <td><%= number_to_currency(item[:item_total]) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h5>Shipping Address</h5>
+      </div>
+      <div class="card-body">
+        <p>
+          <strong><%= current_user.first_name %> <%= current_user.last_name %></strong><br>
+          <%= current_user.street_address %><br>
+          <%= current_user.city %>, <%= current_user.province.name %><br>
+          <%= current_user.postal_code %><br>
+          Phone: <%= current_user.phone %>
+        </p>
+        <%= link_to "Edit Address", edit_user_registration_path, class: 'btn btn-sm btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5>Order Total</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <tr>
+            <td>Subtotal:</td>
+            <td class="text-end"><%= number_to_currency(@subtotal) %></td>
+          </tr>
+          <% if @gst > 0 %>
+            <tr>
+              <td>GST (<%= current_user.province.gst_rate %>%):</td>
+              <td class="text-end"><%= number_to_currency(@gst) %></td>
+            </tr>
+          <% end %>
+          <% if @pst > 0 %>
+            <tr>
+              <td>PST (<%= current_user.province.pst_rate %>%):</td>
+              <td class="text-end"><%= number_to_currency(@pst) %></td>
+            </tr>
+          <% end %>
+          <% if @hst > 0 %>
+            <tr>
+              <td>HST (<%= current_user.province.hst_rate %>%):</td>
+              <td class="text-end"><%= number_to_currency(@hst) %></td>
+            </tr>
+          <% end %>
+          <tr class="table-primary">
+            <th>Total:</th>
+            <th class="text-end"><%= number_to_currency(@total) %></th>
+          </tr>
+        </table>
+
+        <%= form_with model: @order, local: true do |f| %>
+          <%= f.submit "Place Order", class: 'btn btn-success btn-lg w-100 mb-2' %>
+        <% end %>
+
+        <%= link_to "Back to Cart", cart_path, class: 'btn btn-outline-secondary w-100' %>
+      </div>
+    </div>
+  </div>
+</div>

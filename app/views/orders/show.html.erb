@@ -1,0 +1,88 @@
+<div class="row justify-content-center mt-4">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header bg-success text-white">
+        <h4>Order Confirmation</h4>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-success">
+          Thank you for your order! Your order number is <strong><%= @order.order_number %></strong>
+        </div>
+
+        <h5>Order Details</h5>
+        <p>
+          <strong>Order Date:</strong> <%= @order.created_at.strftime("%B %d, %Y at %I:%M %p") %><br>
+          <strong>Status:</strong> <span class="badge bg-primary"><%= @order.status.titleize %></span>
+        </p>
+
+        <h5 class="mt-4">Items Ordered</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order.order_items.each do |item| %>
+              <tr>
+                <td><%= item.product.name %></td>
+                <td><%= number_to_currency(item.price_at_purchase) %></td>
+                <td><%= item.quantity %></td>
+                <td><%= number_to_currency(item.line_total) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div class="row">
+          <div class="col-md-6 offset-md-6">
+            <table class="table table-sm">
+              <tr>
+                <td>Subtotal:</td>
+                <td class="text-end"><%= number_to_currency(@order.subtotal) %></td>
+              </tr>
+              <% if @order.gst_amount > 0 %>
+                <tr>
+                  <td>GST:</td>
+                  <td class="text-end"><%= number_to_currency(@order.gst_amount) %></td>
+                </tr>
+              <% end %>
+              <% if @order.pst_amount > 0 %>
+                <tr>
+                  <td>PST:</td>
+                  <td class="text-end"><%= number_to_currency(@order.pst_amount) %></td>
+                </tr>
+              <% end %>
+              <% if @order.hst_amount > 0 %>
+                <tr>
+                  <td>HST:</td>
+                  <td class="text-end"><%= number_to_currency(@order.hst_amount) %></td>
+                </tr>
+              <% end %>
+              <tr class="table-primary">
+                <th>Total:</th>
+                <th class="text-end"><%= number_to_currency(@order.total_amount) %></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <h5 class="mt-4">Shipping Address</h5>
+        <p>
+          <%= @order.user.first_name %> <%= @order.user.last_name %><br>
+          <%= @order.user.street_address %><br>
+          <%= @order.user.city %>, <%= @order.province.name %><br>
+          <%= @order.user.postal_code %>
+        </p>
+
+        <div class="mt-4">
+          <%= link_to "View All Orders", orders_path, class: 'btn btn-primary' %>
+          <%= link_to "Continue Shopping", root_path, class: 'btn btn-outline-secondary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

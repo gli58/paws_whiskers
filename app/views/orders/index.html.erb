@@ -1,0 +1,34 @@
+<h1 class="my-4">My Orders</h1>
+
+<% if @orders.empty? %>
+  <div class="alert alert-info">
+    You haven't placed any orders yet. <%= link_to "Start shopping", root_path, class: "alert-link" %>
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order Number</th>
+          <th>Date</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.order_number %></td>
+            <td><%= order.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= order.order_items.sum(:quantity) %> items</td>
+            <td><%= number_to_currency(order.total_amount) %></td>
+            <td><span class="badge bg-primary"><%= order.status.titleize %></span></td>
+            <td><%= link_to "View", order_path(order), class: 'btn btn-sm btn-primary' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

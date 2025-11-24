@@ -1,0 +1,31 @@
+<div class="col-lg-3 col-md-4 col-sm-6">
+  <div class="product-card">
+    <% if product.image.attached? %>
+      <%= link_to product_path(product) do %>
+        <%= image_tag product.image, alt: product.name %>
+      <% end %>
+    <% else %>
+      <%= link_to product_path(product) do %>
+        <%= image_tag 'https://via.placeholder.com/300x200?text=No+Image', alt: product.name %>
+      <% end %>
+    <% end %>
+
+    <div class="badges">
+      <% if product.on_sale %>
+        <span class="badge bg-danger">ON SALE</span>
+      <% end %>
+      <% if product.is_new %>
+        <span class="badge bg-info">NEW</span>
+      <% end %>
+    </div>
+
+    <h3><%= link_to product.name, product_path(product) %></h3>
+    <p class="price"><%= number_to_currency(product.current_price) %></p>
+
+    <% if product.stock_quantity > 0 %>
+      <%= button_to "Add to Cart", add_to_cart_path(product), method: :post, class: "btn btn-primary btn-sm w-100" %>
+    <% else %>
+      <button class="btn btn-secondary btn-sm w-100" disabled>Out of Stock</button>
+    <% end %>
+  </div>
+</div>
