@@ -1,2 +1,90 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="container mt-5">
+  <h1>My Account</h1>
+
+  <div class="row mt-4">
+    <!-- Account Information -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Account Information</h5>
+        </div>
+        <div class="card-body">
+          <p><strong>Email:</strong> <%= @user.email %></p>
+          <p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
+          <p><strong>Phone:</strong> <%= @user.phone || 'Not provided' %></p>
+          <p><strong>Member Since:</strong> <%= @user.created_at.strftime("%B %d, %Y") %></p>
+
+          <%= link_to "Edit Profile", edit_user_path, class: "btn btn-primary mt-2" %>
+          <%= link_to "Change Password", edit_user_registration_path, class: "btn btn-outline-secondary mt-2" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Information -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">Shipping Address</h5>
+        </div>
+        <div class="card-body">
+          <% if @user.street_address.present? %>
+            <address>
+              <%= @user.street_address %><br>
+              <%= @user.city %>, <%= @user.province&.name || 'Province not set' %><br>
+              <%= @user.postal_code %>
+            </address>
+            <%= link_to "Edit Address", edit_user_path, class: "btn btn-success" %>
+          <% else %>
+            <p class="text-muted">No address on file</p>
+            <%= link_to "Add Address", edit_user_path, class: "btn btn-success" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="card mt-4">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">Recent Orders</h5>
+    </div>
+    <div class="card-body">
+      <% if @orders.any? %>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order Number</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @orders.each do |order| %>
+                <tr>
+                  <td><%= order.order_number %></td>
+                  <td><%= order.created_at.strftime("%b %d, %Y") %></td>
+                  <td>
+                    <span class="badge bg-<%= order.status == 'pending' ? 'warning' : order.status == 'paid' ? 'success' : 'primary' %>">
+                      <%= order.status.titleize %>
+                    </span>
+                  </td>
+                  <td><%= number_to_currency(order.total_amount) %></td>
+                  <td>
+                    <%= link_to "View", order_path(order), class: "btn btn-sm btn-outline-primary" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%= link_to "View All Orders", orders_path, class: "btn btn-info" %>
+      <% else %>
+        <p class="text-muted">No orders yet</p>
+        <%= link_to "Start Shopping", root_path, class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
