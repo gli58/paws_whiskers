@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
     @products = Product.includes(:categories).all
 
     if params[:search].present?
-      @products = @products.where('name LIKE ? OR description LIKE ?',
+      @products = @products.where('products.name LIKE ? OR products.description LIKE ?',
                                    "%#{params[:search]}%",
                                    "%#{params[:search]}%")
     end
@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
     @products = @products.new_arrivals if params[:new]
     @products = @products.recently_updated if params[:recently_updated]
 
-    @products = @products.page(params[:page]).per(12)
+    @products = @products.distinct.page(params[:page]).per(12)
     @categories = Category.all
   end
 

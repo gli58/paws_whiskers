@@ -10,6 +10,14 @@ class Order < ApplicationRecord
 
   before_validation :generate_order_number, on: :create
 
+  def self.ransackable_attributes(auth_object = nil)
+    [ "created_at", "gst_amount", "hst_amount", "id", "order_number", "province_id", "pst_amount", "status", "subtotal", "total_amount", "updated_at", "user_id" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "order_items", "products", "province", "user" ]
+  end
+
   private
 
   def generate_order_number

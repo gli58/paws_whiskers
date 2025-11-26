@@ -25,8 +25,8 @@ ActiveAdmin.register Product do
     f.inputs 'Product Details' do
       f.input :name
       f.input :description, as: :text, input_html: { rows: 5 }
-      f.input :current_price
-      f.input :stock_quantity
+      f.input :current_price, input_html: { min: 0.01, step: 0.01 }  # 添加 min 和 step
+      f.input :stock_quantity, input_html: { min: 0 }  # 添加 min
       f.input :on_sale
       f.input :is_new
       f.input :categories, as: :check_boxes, collection: Category.all
