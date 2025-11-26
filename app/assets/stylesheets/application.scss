@@ -79,3 +79,18 @@ nav.navbar {
     margin-bottom: 10px;
   }
 }
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .product-card {
+    margin-bottom: 1rem;
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+}
