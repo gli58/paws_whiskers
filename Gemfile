@@ -38,8 +38,9 @@ gem "devise"
 gem "sassc-rails"
 gem "kaminari"
 gem "faker"
-gem 'bootstrap', '~> 5.3'
-gem 'jquery-rails'
+gem "bootstrap", "~> 5.3"
+gem "jquery-rails"
+gem 'nokogiri'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -68,3 +69,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+gem "image_processing", "~> 1.2"
+gem "rubocop-rails", require: false
