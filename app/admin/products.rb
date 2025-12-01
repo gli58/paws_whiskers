@@ -22,7 +22,7 @@ ActiveAdmin.register Product do
   filter :created_at
 
   form do |f|
-    f.inputs 'Product Details' do
+    f.inputs "Product Details" do
       f.input :name
       f.input :description, as: :text, input_html: { rows: 5 }
       f.input :current_price, input_html: { min: 0.01, step: 0.01 }  # 添加 min 和 step
@@ -30,7 +30,7 @@ ActiveAdmin.register Product do
       f.input :on_sale
       f.input :is_new
       f.input :categories, as: :check_boxes, collection: Category.all
-      f.input :image, as: :file, hint: f.object.image.attached? ? image_tag(f.object.image, height: 100) : content_tag(:span, 'No image uploaded')
+      f.input :image, as: :file, hint: f.object.image.attached? ? image_tag(f.object.image, height: 100) : content_tag(:span, "No image uploaded")
     end
     f.actions
   end
@@ -49,11 +49,11 @@ ActiveAdmin.register Product do
         if product.image.attached?
           image_tag product.image, height: 200
         else
-          content_tag(:span, 'No image')
+          content_tag(:span, "No image")
         end
       end
       row :categories do |product|
-        product.categories.map(&:name).join(', ')
+        product.categories.map(&:name).join(", ")
       end
       row :created_at
       row :updated_at

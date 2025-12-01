@@ -18,12 +18,12 @@ ActiveAdmin.register Order do
 
   filter :order_number
   filter :user
-  filter :status, as: :select, collection: [ 'pending', 'paid', 'shipped', 'delivered', 'cancelled' ]
+  filter :status, as: :select, collection: [ "pending", "paid", "shipped", "delivered", "cancelled" ]
   filter :created_at
 
   form do |f|
     f.inputs do
-      f.input :status, as: :select, collection: [ 'pending', 'paid', 'shipped', 'delivered', 'cancelled' ]
+      f.input :status, as: :select, collection: [ "pending", "paid", "shipped", "delivered", "cancelled" ]
     end
     f.actions
   end

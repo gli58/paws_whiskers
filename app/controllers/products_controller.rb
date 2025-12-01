@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
     @products = Product.includes(:categories).all
 
     if params[:search].present?
-      @products = @products.where('products.name LIKE ? OR products.description LIKE ?',
+      @products = @products.where("products.name LIKE ? OR products.description LIKE ?",
                                    "%#{params[:search]}%",
                                    "%#{params[:search]}%")
     end

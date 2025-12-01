@@ -26,21 +26,21 @@ ActiveAdmin.register User do
   filter :created_at
 
   form do |f|
-    f.inputs 'User Details' do
+    f.inputs "User Details" do
       f.input :email
       f.input :first_name
       f.input :last_name
       f.input :phone
     end
 
-    f.inputs 'Address' do
+    f.inputs "Address" do
       f.input :street_address
       f.input :city
       f.input :province, as: :select, collection: Province.all.map { |p| [ p.name, p.id ] }
       f.input :postal_code
     end
 
-    f.inputs 'Password' do
+    f.inputs "Password" do
       f.input :password
       f.input :password_confirmation
     end
